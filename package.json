@@ -1,0 +1,20 @@
+{
+  "name": "web_shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hinoobers/web_shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hinoobers/web_shop/issues"
+  },
+  "homepage": "https://github.com/hinoobers/web_shop#readme"
+}
