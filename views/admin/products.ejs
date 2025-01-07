@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add product</title>
+
+    <link rel="stylesheet" type="text/css" href="../fix.css"/>
+    <link rel="stylesheet" type="text/css" href="../form.css"/>
+    <script src="../header.js" defer></script>
+</head>
+<body>
+    <%- include('../header.ejs'); %>
+
+    <div class="products">
+        <% products.forEach(item => { %>
+            <div class="product">
+                <h1><%= item.title %></h1>
+                <img src=<%= item.imageUrl %> alt="" />
+                <h1>$<%= item.price %></h1>
+                <h3><%= item.description %></h2>
+                <div class="btns">
+                    <button id="productedit-<%= item.id %>" class="edit-btn">Edit</button>
+                    <button id="productdelete-<%= item.id %>" class="delete-btn">Delete</button>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <script>
+        const deleteBtns = document.getElementsByClassName("delete-btn");
+        const editBtns = document.getElementsByClassName("edit-btn");
+
+        for(let i = 0; i < editBtns.length; i++) {
+            editBtns[i].addEventListener("click", () => {
+                const id = editBtns[i].id.split("-")[1];
+               
+                const title = prompt("Enter new title");
+                const price = prompt("Enter new price");
+                const description = prompt("Enter new description");
+                const imageUrl = prompt("Enter new image URL");
+
+                fetch("/editproduct", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id: id, title: title, price: price, description: description, imageUrl: imageUrl})
+                }).then(data => data.json()).then(response => {
+                    window.location.reload();
+                });
+            });
+        }
+
+        for(let i = 0; i < deleteBtns.length; i++) {
+            deleteBtns[i].addEventListener("click", () => {
+                const id = deleteBtns[i].id.split("-")[1];
+                console.log("delete", id);
+
+                fetch("/deleteproduct", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({id: id})
+                }).then(data => data.json()).then(response => {
+                    window.location.reload();
+                });
+            });
+        }
+    </script>
+
+
+</body>
+</html>

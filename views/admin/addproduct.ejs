@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add product</title>
+
+    <link rel="stylesheet" type="text/css" href="../style.css"/>
+    <link rel="stylesheet" type="text/css" href="../form.css"/>
+    <script src="../header.js" defer></script>
+</head>
+<body>
+    <%- include('../header.ejs'); %>
+
+    <form action="/addproduct" method="post">
+        <input type="text" placeholder="Title" id="title" name="title" required/>
+        <input type="number" placeholder="Price" id="price" name="price" required/>
+        <input type="text" placeholder="Description" id="description" name="description" required/>
+        <input type="url" placeholder="Image URL" id="imageUrl" name="imageUrl" required/>
+
+        <input type="submit" value="Send"/>
+    </form>
+</body>
+</html>

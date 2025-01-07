@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" href="style.css"/>
+    <script src="header.js" defer></script>
+</head>
+<body>
+    <%- include('header.ejs'); %>
+
+    <div class="products">
+        <% products.forEach(item => { %>
+            <div class="product">
+                <h1><%= item.title %></h1>
+                <img src=<%= item.imageUrl %> alt="" />
+                <h1>$<%= item.price %></h1>
+                <h3><%= item.description %></h2>
+                <button id="product-<%= item.id %>" class="add-to-cart">Add To Cart</button>
+            </div>
+        <% }) %>
+    </div>
+
+    <script>
+        const btns = document.getElementsByClassName("add-to-cart");
+        for(let i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", () => {
+                const id = btns[i].id.split("-")[1];
+
+                localStorage.setItem("cart", JSON.stringify([...JSON.parse(localStorage.getItem("cart") || "[]"), {id: id, quantity: 1}]));
+                alert("Added to cart");
+            });
+        }
+    </script>
+
+        <!-- <div class="product">
+            <h1>A Book</h1>
+            <img src="https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg" alt="" />
+            <h1>$19.99</h1>
+            <h2>This is test description</h2>
+            <button>Add To Cart</button>
+        </div>
+        <div class="product">
+            <h1>A Book</h1>
+            <img src="https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg" alt="" />
+            <h1>$19.99</h1>
+            <h2>This is test description</h2>
+            <button>Add To Cart</button>
+        </div>
+        <div class="product">
+            <h1>A Book</h1>
+            <img src="https://www.publicdomainpictures.net/pictures/10000/velka/1-1210009435EGmE.jpg" alt="" />
+            <h1>$19.99</h1>
+            <h2>This is test description</h2>
+            <button>Add To Cart</button>
+        </div> -->
+</body>
+</html>

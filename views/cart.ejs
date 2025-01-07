@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop</title>
+
+    <link rel="stylesheet" type="text/css" href="fix.css"/>
+    <script src="header.js" defer></script>
+</head>
+<body>
+    <%- include('header.ejs'); %>
+
+    <div class="products">
+        
+    </div>
+
+
+    <script>
+        const cart = localStorage.getItem("cart");
+        if(cart != null) {
+            const array = JSON.parse(cart);
+            for(let i = 0; i < array.length; i++) {
+                const id = array[i].id;
+
+                // EJS jamab
+                fetch("/fetchproduct/" + id, {
+                    method: "GET"
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    const product = document.createElement("div");
+                    product.classList.add("product");
+
+                    const title = document.createElement("h1");
+                    title.innerHTML = data.title;
+                    product.appendChild(title);
+
+                    const img = document.createElement("img");
+                    img.src = data.imageUrl;
+                    product.appendChild(img);
+
+                    const price = document.createElement("h1");
+                    price.innerHTML = "$" + data.price;
+                    product.appendChild(price);
+
+                    const description = document.createElement("h3");
+                    description.innerHTML = data.description;
+                    product.appendChild(description);
+
+                    const btns = document.createElement("div");
+                    btns.classList.add("btns");
+                    product.appendChild(btns);
+
+                    const quantity = document.createElement("input");
+                    quantity.type = "number";
+                    quantity.value = array[i].quantity;
+                    quantity.min = 1;
+                    quantity.max = 100;
+                    quantity.placeholder = "Quantity";
+                    quantity.addEventListener("change", () => {
+                        console.log(quantity.value);
+                        const cart = JSON.parse(localStorage.getItem("cart"));
+                        for(let i = 0; i < cart.length; i++) {
+                            if(cart[i].id == data.id) {
+                                cart[i].quantity = quantity.value;
+                                break;
+                            }
+                        }
+
+                        console.log(cart);
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                    });
+                    btns.appendChild(quantity);
+
+
+                    const btn = document.createElement("button");
+                    btn.innerHTML = "Remove From Cart";
+                    btn.addEventListener("click", () => {
+                        const cart = JSON.parse(localStorage.getItem("cart"));
+                        const index = cart.indexOf(data.id);
+                        cart.splice(index, 1);
+                        localStorage.setItem("cart", JSON.stringify(cart));
+                        product.remove();
+                    });
+                    btns.appendChild(btn);
+                    product.appendChild(btns);
+
+                    if(document.cookie.includes("token")) {
+                        // Logged in
+
+                        const btn2 = document.createElement("button");
+                        btn2.innerHTML = "Buy";
+                        btn2.addEventListener("click", () => {
+                            alert("Ostetud")
+                        })
+                        product.appendChild(btn2);
+
+                    }
+
+                    document.getElementsByClassName("products")[0].appendChild(product);
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+        }
+    </script>
+</body>
+</html>

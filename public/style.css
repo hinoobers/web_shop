@@ -1,0 +1,64 @@
+body {
+    background-color: gray;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    background-color: green;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    align-items: center;
+}
+
+header a {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+}
+
+header a:hover {
+    color: yellow;
+}
+
+.products {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    padding: 50px;
+}
+
+.products .product {
+    position: relative;
+    margin: 15px;
+    border: 1px black solid;
+    border-radius: 5px;
+    max-width: 300px;
+    min-width: 300px;
+    min-height: 510px;
+    max-height: 510px;
+    background-color: white;
+}
+
+.products img {
+    width: 100%;
+    height: 240px;
+}
+
+.products h1,h2,h3 {
+    text-indent: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.products button {
+    width: 100%;
+    height: 25px;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    background-color: darkgray;
+}
